@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" width="482" height="468"  applicationComplete="init()" >
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->	
+	</fx:Declarations>	
+	
+	<fx:Script>
+		<![CDATA[
+			
+			private function init():void
+			{
+				ye_txt.text="-5";				
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				tips_txt.text="";
+			}
+
+
+			protected function choose_btn_clickHandler(event:MouseEvent):void
+			{
+				var iendTime:int = Number(time_txt.text) + int(ye_txt.text) * 60 * 60;
+				var endTime:Date = new Date(iendTime * 1000);
+				var sTime:String=  endTime.fullYearUTC +"/"+ addZero(endTime.monthUTC + 1) +"/"+ addZero(endTime.dateUTC)+"  "+addZero(endTime.hoursUTC) +":"+addZero(endTime.minutesUTC) +":"+addZero(endTime.secondsUTC);
+								
+				tips_txt.appendText(time_txt.text);
+				tips_txt.appendText("\n");
+				tips_txt.appendText("----------------"+sTime+"-----------------");	
+				tips_txt.appendText("\n");
+			}
+			
+			/**
+			 * 数据添0(0-9添0)
+			 * @param	value	值
+			 * @return
+			 */
+			public function addZero(value:int):String 
+			{
+				var zeroStr:String = "";
+				if (value < 10)
+					zeroStr = "0" + value;
+				else 
+					zeroStr = String(value);
+				return zeroStr;			
+			}
+
+		]]>
+	</fx:Script>
+	<mx:Form x="-2" y="1" width="492" height="475">	
+		<s:BorderContainer width="456" height="30" borderVisible="true" dropShadowVisible="false" borderColor="#4C3939" borderAlpha="0.01">
+			<s:Label x="-1" y="-1" text="时间格式化" width="455" height="29" verticalAlign="middle" textAlign="center"/>
+			<s:Label x="355" y="-1" text="beta 1.0.0&#xd;06-10 2014" width="99" height="35" verticalAlign="middle" textAlign="right" paddingBottom="0" color="#8A7070"/>
+		</s:BorderContainer>	
+		<s:BorderContainer width="456" height="399" dropShadowVisible="true" borderAlpha="0.34" borderWeight="0">		
+			<s:Button x="292" y="11" label="格式化" width="69" id="choose_btn" click="choose_btn_clickHandler(event)"/>
+			<s:TextInput x="8" y="12" width="218" id="time_txt" borderVisible="true"/>
+			<s:TextArea y="45" width="431" height="344" id="tips_txt" paddingBottom="3" paddingTop="3" x="9"/>
+			<s:TextInput x="240" y="12" width="39" id="ye_txt"/>
+			<s:Button x="369" y="10" label="清理" click="button1_clickHandler(event)"/>
+		</s:BorderContainer>
+		
+	</mx:Form>
+</s:WindowedApplication>
